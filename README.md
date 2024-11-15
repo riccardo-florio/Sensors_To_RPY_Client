@@ -2,7 +2,7 @@
 
 Questa applicazione consente di ricevere dati dai sensori di un dispositivo mobile, convertirli in valori di Roll, Pitch e Yaw (RPY), e visualizzarli in tempo reale tramite un'interfaccia grafica intuitiva.
 
-**Nota:** Questo progetto fa parte di un'iniziativa più ampia sul monitoraggio del cedimento strutturale dei ponti. Per maggiori informazioni, visita il repository GitHub corrispondente: [Monitoraggio Cedimento Strutturale dei Ponti](https://github.com/tuo-username/progetto-cedimento-ponti).
+**Nota:** Questo progetto fa parte di un'iniziativa più ampia sul monitoraggio del cedimento strutturale dei ponti. Per maggiori informazioni, visita il repository GitHub corrispondente: [Analisi delle vibrazioni di un ponte a partire da dati inerziali](https://github.com/riccardo-florio/Bridge_Vibration_Analysis).
 
 ## Prerequisiti
 
@@ -103,7 +103,7 @@ Questa applicazione consente di ricevere dati dai sensori di un dispositivo mobi
 
 Questo progetto è parte di un'iniziativa più ampia per il monitoraggio e l'analisi del cedimento strutturale dei ponti. Il progetto principale include sistemi di acquisizione dati, analisi strutturale e altre funzionalità avanzate.
 
-Monitoraggio Cedimento Strutturale dei Ponti: [https://github.com/tuo-username/progetto-cedimento-ponti](https://github.com/tuo-username/progetto-cedimento-ponti)
+Analisi delle vibrazioni di un ponte a partire da dati inerziali: [https://github.com/riccardo-florio/Bridge_Vibration_Analysis](https://github.com/tuo-username/progetto-cedimento-ponti)
 
 ## Licenza
 
