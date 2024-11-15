@@ -16,7 +16,7 @@ class SensorManager:
         self.yaw = 0.0
         self.E = 0.0
         self.N = 0.0
-        self.U = 0.0  # Anche se U non viene utilizzato
+        self.U = 0.0
 
     def connect(self, url):
         self.ws = websocket.WebSocketApp(url,
@@ -44,7 +44,7 @@ class SensorManager:
         if sensor_type == 'android.sensor.magnetic_field':
             m_sx, m_sy, m_sz = values
             alpha_mf = m_sx * math.cos(self.pitch) + (m_sz * math.cos(self.roll) + m_sy * math.sin(self.roll)) * math.sin(self.pitch)
-            beta_mf = m_sx * math.sin(self.roll) - m_sy * math.cos(self.roll)
+            beta_mf = m_sz * math.sin(self.roll) - m_sy * math.cos(self.roll)
             matr = np.array([[alpha_mf, beta_mf], [-beta_mf, alpha_mf]])
             try:
                 matr_inv = np.linalg.inv(matr)
@@ -63,10 +63,10 @@ class SensorManager:
             self.app.filtered_yaw = self.yaw
             self.app.first_attempt = False
         else:
-            alpha = self.app.alpha
-            self.app.filtered_roll = alpha * self.app.filtered_roll + (1 - alpha) * self.roll
-            self.app.filtered_pitch = alpha * self.app.filtered_pitch + (1 - alpha) * self.pitch
-            self.app.filtered_yaw = alpha * self.app.filtered_yaw + (1 - alpha) * self.yaw
+            beta = self.app.beta
+            self.app.filtered_roll = beta * self.app.filtered_roll + (1 - beta) * self.roll
+            self.app.filtered_pitch = beta * self.app.filtered_pitch + (1 - beta) * self.pitch
+            self.app.filtered_yaw = beta * self.app.filtered_yaw + (1 - beta) * self.yaw
 
         # Normalizza gli angoli
         self.app.filtered_roll = normalize_angle(self.app.filtered_roll)

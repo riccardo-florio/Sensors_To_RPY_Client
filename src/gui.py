@@ -12,12 +12,12 @@ class SensorApp:
     def __init__(self):
         self.root = tk.Tk()
         self.root.title("Sensor Data Receiver")
-        self.root.geometry("1280x900")  # Aumenta la dimensione della finestra
+        self.root.geometry("1280x900")
         self.root.minsize(1280, 900)
         self.running = False
 
         # Inizializzazione delle variabili
-        self.alpha = 0.5
+        self.beta = 0.5
         self.filtered_roll = 0.0
         self.filtered_pitch = 0.0
         self.filtered_yaw = 0.0
@@ -47,14 +47,14 @@ class SensorApp:
 
     def setup_plots(self):
         self.ax_roll.set_title('Roll', fontsize=14)
-        self.ax_roll.set_ylabel('Degrees (radians)', fontsize=12)
+        self.ax_roll.set_ylabel('Radianti', fontsize=12)
 
         self.ax_pitch.set_title('Pitch', fontsize=14)
-        self.ax_pitch.set_ylabel('Degrees (radians)', fontsize=12)
+        self.ax_pitch.set_ylabel('Radianti', fontsize=12)
 
         self.ax_yaw.set_title('Yaw', fontsize=14)
-        self.ax_yaw.set_ylabel('Degrees (radians)', fontsize=12)
-        self.ax_yaw.set_xlabel('Time', fontsize=12)
+        self.ax_yaw.set_ylabel('Radianti', fontsize=12)
+        self.ax_yaw.set_xlabel('Tempo', fontsize=12)
 
     def create_widgets(self):
         # Imposta il tema per ttk
@@ -108,14 +108,15 @@ class SensorApp:
         # Label per 'Filter β'
         ttk.Label(frame_connection, text='Filter β', font=('Helvetica', 12)).grid(row=12, column=0, pady=5, sticky='w')
 
-        # Slider per il filtro beta
-        self.alpha_slider = ttk.Scale(frame_connection, from_=0.0, to=1.0, orient=tk.HORIZONTAL, command=self.update_alpha)
-        self.alpha_slider.set(self.alpha)
-        self.alpha_slider.grid(row=13, column=0, pady=10, sticky='we')
-
         # Etichetta che mostra il valore corrente di β
-        self.beta_value_label = ttk.Label(frame_connection, text=f"Valore corrente di β: {self.alpha:.2f}", font=('Helvetica', 12))
+        self.beta_value_label = ttk.Label(frame_connection, text=f"Valore corrente di β: {self.beta:.2f}", font=('Helvetica', 12))
         self.beta_value_label.grid(row=14, column=0, pady=5, sticky='w')
+
+        # Slider per il filtro beta
+        self.beta_slider = ttk.Scale(frame_connection, from_=0.0, to=1.0, orient=tk.HORIZONTAL)
+        self.beta_slider.set(self.beta)
+        self.beta_slider.grid(row=13, column=0, pady=10, sticky='we')
+        self.beta_slider.config(command=self.update_beta)
 
         # Etichette esplicative per β→1 e β→0 (con testo ingrandito)
         ttk.Label(frame_connection, text='β→1 maggiore effetto filtrante', font=('Helvetica', 12)).grid(row=15, column=0, pady=2, sticky='w')
@@ -162,18 +163,18 @@ class SensorApp:
             # Grafico per Roll
             self.ax_roll.plot(self.x_graph, self.y_graph_roll, color='blue')
             self.ax_roll.set_title('Roll', fontsize=14)
-            self.ax_roll.set_ylabel('Degrees (radians)', fontsize=12)
+            self.ax_roll.set_ylabel('Radianti', fontsize=12)
 
             # Grafico per Pitch
             self.ax_pitch.plot(self.x_graph, self.y_graph_pitch, color='green')
             self.ax_pitch.set_title('Pitch', fontsize=14)
-            self.ax_pitch.set_ylabel('Degrees (radians)', fontsize=12)
+            self.ax_pitch.set_ylabel('Radianti', fontsize=12)
 
             # Grafico per Yaw
             self.ax_yaw.plot(self.x_graph, self.y_graph_yaw, color='red')
             self.ax_yaw.set_title('Yaw', fontsize=14)
-            self.ax_yaw.set_ylabel('Degrees (radians)', fontsize=12)
-            self.ax_yaw.set_xlabel('Time', fontsize=12)
+            self.ax_yaw.set_ylabel('Radianti', fontsize=12)
+            self.ax_yaw.set_xlabel('Tempo', fontsize=12)
 
             # Ruota le etichette dell'asse x
             plt.setp(self.ax_yaw.get_xticklabels(), rotation=45, ha='right')
@@ -182,9 +183,9 @@ class SensorApp:
             self.fig.tight_layout()
             self.canvas.draw()
 
-    def update_alpha(self, val):
-        self.alpha = float(val)
-        self.beta_value_label.config(text=f"Valore corrente di β: {self.alpha:.2f}")
+    def update_beta(self, val):
+        self.beta = float(val)
+        self.beta_value_label.config(text=f"Valore corrente di β: {self.beta:.2f}")
 
     def on_closing(self):
         self.sensor_manager.stop()
